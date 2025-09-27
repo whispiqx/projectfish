@@ -11,4 +11,3 @@ if exist "%KEYLOGGER_PATH%" (
 )
 echo Script ended. >> %TEMP%\debug.log
 exit
-
